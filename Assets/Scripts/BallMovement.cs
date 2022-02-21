@@ -8,21 +8,14 @@ public class BallMovement : MonoBehaviour
     private Rigidbody2D rb;
     private int speed = 30;
     private bool movingRight;
+    private bool movingUp;
 
-    // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         movingRight = (Random.value > 0.5);
-        Debug.Log(movingRight);
-        if (movingRight)
-        {
-            rb.velocity = new Vector2(Random.Range(1f,2f), 1f).normalized * speed;
-        }
-        else
-        {
-            rb.velocity = new Vector2(Random.Range(-1f, -2f), 1f).normalized * speed;
-        }
+        movingUp = (Random.value > 0.5);
+        StartCoroutine(StartWait());
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -40,6 +33,34 @@ public class BallMovement : MonoBehaviour
             rb.velocity = Vector2.zero;
             GlobalVariables.player1Score++;
             SceneManager.LoadScene("GameScene");
+        }
+    }
+
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForSecondsRealtime(1);
+
+        if (movingRight)
+        {
+            if (movingUp)
+            {
+                rb.velocity = new Vector2(Random.Range(1f, 2f), 1f).normalized * speed;
+            }
+            else
+            {
+                rb.velocity = new Vector2(Random.Range(1f, 2f), -1f).normalized * speed;
+            }
+        }
+        else
+        {
+            if (movingUp)
+            {
+                rb.velocity = new Vector2(Random.Range(-1f, -2f), 1f).normalized * speed;
+            }
+            else
+            {
+                rb.velocity = new Vector2(Random.Range(-1f, -2f), -1f).normalized * speed;
+            }
         }
     }
 }
