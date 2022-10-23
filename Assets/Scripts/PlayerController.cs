@@ -3,7 +3,7 @@ using UnityEngine;
 public static class PlayerController
 {
     private static int speed = 30;
-    private static float wallPosition = 15.5f;
+    private static float wallPosition = 13.0f;
 
     private static Vector2 direction;
     private static Vector2 velocity;
